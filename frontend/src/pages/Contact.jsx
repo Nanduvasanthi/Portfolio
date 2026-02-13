@@ -46,7 +46,8 @@ const Contact = () => {
     setStatus({ ...status, loading: true, error: null, success: false });
 
     try {
-      const response = await axios.post('http://localhost:5000/api/contact', formData);
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const response = await axios.post(`${API_URL}/api/contact`, formData);
       
       if (response.data.success) {
         setStatus({
