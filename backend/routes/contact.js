@@ -2,6 +2,37 @@ const express = require('express');
 const router = express.Router();
 const nodemailer = require('nodemailer');
 
+// Helper function to send email with retry
+async function sendEmailWithRetry(mailOptions, retries = 3) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      const transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 587,
+        secure: false,
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS
+        },
+        tls: {
+          rejectUnauthorized: false
+        },
+        connectionTimeout: 60000,
+        greetingTimeout: 30000,
+        socketTimeout: 60000
+      });
+
+      const info = await transporter.sendMail(mailOptions);
+      return { success: true, info };
+    } catch (error) {
+      console.log(`Attempt ${i + 1} failed:`, error.message);
+      if (i === retries - 1) throw error;
+      // Wait 2 seconds before retrying
+      await new Promise(resolve => setTimeout(resolve, 2000));
+    }
+  }
+}
+
 router.post('/', async (req, res) => {
   try {
     const { name, email, subject, message } = req.body;
@@ -9,17 +40,6 @@ router.post('/', async (req, res) => {
     if (!name || !email || !subject || !message) {
       return res.status(400).json({ error: 'All fields are required' });
     }
-
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      },
-      tls: {
-        rejectUnauthorized: false
-      }
-    });
 
     const mailOptions = {
       from: `"Portfolio Contact Form" <${process.env.EMAIL_USER}>`,
@@ -32,7 +52,6 @@ router.post('/', async (req, res) => {
         <head>
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>New Contact Form Submission</title>
         </head>
         <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f5f5f5;">
           <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
@@ -94,27 +113,6 @@ router.post('/', async (req, res) => {
                   </div>
                 </div>
                 
-                <!-- Quick actions -->
-                <div style="background-color: #f9fafb; border-radius: 8px; padding: 16px; margin-top: 16px;">
-                  <p style="margin: 0 0 12px 0; color: #4b5563; font-size: 14px; font-weight: 500;">⚡ Quick Actions:</p>
-                  <table width="100%">
-                    <tr>
-                      <td style="padding: 4px 0;">
-                        <a href="mailto:${email}?subject=Re: ${subject}" style="color: #8B5CF6; text-decoration: none; font-size: 14px; display: flex; align-items: center;">
-                          <span style="margin-right: 6px;">📧</span> Reply to ${name}
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td style="padding: 4px 0;">
-                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=Re: ${subject}" style="color: #8B5CF6; text-decoration: none; font-size: 14px; display: flex; align-items: center;">
-                          <span style="margin-right: 6px;">📱</span> Open in Gmail
-                        </a>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-                
                 <!-- Footer note -->
                 <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #e5e7eb; text-align: center;">
                   <p style="margin: 0; color: #9ca3af; font-size: 12px;">
@@ -132,11 +130,18 @@ router.post('/', async (req, res) => {
       `
     };
 
-    await transporter.sendMail(mailOptions);
-    res.status(200).json({ success: true, message: 'Email sent successfully' });
+    const result = await sendEmailWithRetry(mailOptions);
+    
+    if (result.success) {
+      console.log('Email sent successfully:', result.info.messageId);
+      res.status(200).json({ success: true, message: 'Email sent successfully' });
+    }
   } catch (error) {
-    console.error('Contact form error:', error);
-    res.status(500).json({ error: 'Failed to send message. Please try again.' });
+    console.error('Final error after retries:', error);
+    res.status(500).json({ 
+      error: 'Failed to send message. Please try again later.',
+      details: error.message 
+    });
   }
 });
 
