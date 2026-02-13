@@ -1,6 +1,6 @@
 # Nandu Vasanthi - Full Stack Developer Portfolio
 
-![Portfolio Preview](frontend/src/assets/images/profile.jpg)
+
 
 A modern, responsive portfolio website showcasing my skills, projects, and experience as a Full Stack Developer. Built with React, Tailwind CSS, and Framer Motion with a Node.js backend for the contact form.
 
