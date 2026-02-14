@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
-import axios from 'axios';
 import { 
   Mail, 
   Phone, 
@@ -28,10 +27,9 @@ const Contact = () => {
   });
 
   const [status, setStatus] = useState({
-    submitted: false,
     loading: false,
-    error: null,
-    success: false
+    success: false,
+    error: null
   });
 
   const handleChange = (e) => {
@@ -43,37 +41,42 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatus({ ...status, loading: true, error: null, success: false });
+    setStatus({ loading: true, success: false, error: null });
+
+    // Get access key from environment variable
+    const ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
+
+    const formDataToSend = new FormData();
+    formDataToSend.append('access_key', ACCESS_KEY);
+    formDataToSend.append('name', formData.name);
+    formDataToSend.append('email', formData.email);
+    formDataToSend.append('subject', formData.subject);
+    formDataToSend.append('message', formData.message);
+    formDataToSend.append('from_name', 'Nandu Vasanthi Portfolio');
 
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-      const response = await axios.post(`${API_URL}/api/contact`, formData);
-      
-      if (response.data.success) {
-        setStatus({
-          submitted: true,
-          loading: false,
-          error: null,
-          success: true
-        });
-        
-        setFormData({
-          name: '',
-          email: '',
-          subject: '',
-          message: ''
-        });
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formDataToSend
+      });
 
+      const data = await response.json();
+
+      if (data.success) {
+        setStatus({ loading: false, success: true, error: null });
+        setFormData({ name: '', email: '', subject: '', message: '' });
+        
         setTimeout(() => {
           setStatus(prev => ({ ...prev, success: false }));
         }, 5000);
+      } else {
+        setStatus({ loading: false, success: false, error: data.message });
       }
     } catch (error) {
-      setStatus({
-        ...status,
-        loading: false,
-        error: error.response?.data?.error || 'Failed to send message. Please try again.',
-        success: false
+      setStatus({ 
+        loading: false, 
+        success: false, 
+        error: 'Something went wrong. Please try again.' 
       });
     }
   };
@@ -84,27 +87,21 @@ const Contact = () => {
       title: 'Email',
       value: 'nvasanthi2005@gmail.com',
       link: 'mailto:nvasanthi2005@gmail.com',
-      color: 'from-rose-500 to-pink-500',
-      lightColor: 'from-rose-50 to-pink-50',
-      darkColor: 'from-rose-500/10 to-pink-500/10'
+      color: 'from-rose-500 to-pink-500'
     },
     {
       icon: <Phone size={24} />,
       title: 'Phone',
       value: '+91 98765 43210',
       link: 'tel:+919876543210',
-      color: 'from-purple-500 to-indigo-500',
-      lightColor: 'from-purple-50 to-indigo-50',
-      darkColor: 'from-purple-500/10 to-indigo-500/10'
+      color: 'from-purple-500 to-indigo-500'
     },
     {
       icon: <MapPin size={24} />,
       title: 'Location',
       value: 'Guntur, Andhra Pradesh, India',
       link: null,
-      color: 'from-emerald-500 to-teal-500',
-      lightColor: 'from-emerald-50 to-teal-50',
-      darkColor: 'from-emerald-500/10 to-teal-500/10'
+      color: 'from-emerald-500 to-teal-500'
     }
   ];
 
@@ -114,16 +111,14 @@ const Contact = () => {
       name: 'GitHub',
       username: '@nanduvasanthi',
       url: 'https://github.com/Nanduvasanthi',
-      color: 'from-gray-700 to-gray-900',
-      lightColor: 'from-gray-100 to-gray-200'
+      color: 'from-gray-700 to-gray-900'
     },
     {
       icon: <Linkedin size={22} />,
       name: 'LinkedIn',
       username: 'miriyala-nandu-vasanthi',
       url: 'https://linkedin.com/in/miriyala-nandu-vasanthi/',
-      color: 'from-blue-600 to-blue-800',
-      lightColor: 'from-blue-100 to-blue-200'
+      color: 'from-blue-600 to-blue-800'
     }
   ];
 
@@ -167,23 +162,20 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="relative py-16 lg:py-10 overflow-hidden bg-gradient-to-b from-slate-50 to-white dark:from-dark-300 dark:to-dark-200">
+    <section id="contact" className="relative py-16 lg:py-20 overflow-hidden bg-gradient-to-b from-slate-50 to-white dark:from-dark-300 dark:to-dark-200">
       
-      {/* Background Decorations */}
       <div className="absolute inset-0">
         <div className="absolute top-40 -left-20 w-80 h-80 bg-rose-200/20 dark:bg-rose-900/20 rounded-full blur-3xl"></div>
         <div className="absolute bottom-40 -right-20 w-96 h-96 bg-purple-200/20 dark:bg-purple-900/20 rounded-full blur-3xl"></div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-rose-100/10 to-purple-100/10 dark:from-rose-900/5 dark:to-purple-900/5 rounded-full blur-3xl"></div>
       </div>
       
-      {/* Subtle Grid Pattern */}
       <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.03]" 
            style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #64748b 1px, transparent 0)', backgroundSize: '40px 40px' }}>
       </div>
 
       <div className="container-custom relative z-10 max-w-6xl">
         
-        {/* Section Header */}
         <motion.div 
           className="text-center mb-12"
           initial="hidden"
@@ -220,12 +212,11 @@ const Contact = () => {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
           >
-            {/* Contact Cards */}
             {contactInfo.map((item, index) => (
               <motion.div
                 key={index}
                 variants={fadeInRight}
-                whileHover={{ y: -4, boxShadow: "0 30px 45px -12px rgba(0,0,0,0.15)" }}
+                whileHover={{ y: -4 }}
                 className="bg-white dark:bg-dark-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition-all duration-500 border border-slate-200 dark:border-dark-100 group"
               >
                 <div className="flex items-start space-x-4">
@@ -253,10 +244,9 @@ const Contact = () => {
               </motion.div>
             ))}
 
-            {/* Social Links */}
             <motion.div 
               variants={fadeInRight}
-              whileHover={{ y: -4, boxShadow: "0 30px 45px -12px rgba(0,0,0,0.15)" }}
+              whileHover={{ y: -4 }}
               className="bg-white dark:bg-dark-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition-all duration-500 border border-slate-200 dark:border-dark-100"
             >
               <h3 className="text-base font-semibold text-slate-900 dark:text-white mb-4 flex items-center">
@@ -303,10 +293,9 @@ const Contact = () => {
             viewport={{ once: true, margin: "-100px" }}
           >
             <motion.div 
-              whileHover={{ y: -4, boxShadow: "0 30px 45px -12px rgba(0,0,0,0.15)" }}
+              whileHover={{ y: -4 }}
               className="bg-white dark:bg-dark-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-500 p-6 md:p-8 border border-slate-200 dark:border-dark-100"
             >
-              {/* Form Header */}
               <div className="flex items-center justify-between mb-6">
                 <div>
                   <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-1">
@@ -321,7 +310,6 @@ const Contact = () => {
                 </div>
               </div>
 
-              {/* Success Message */}
               {status.success && (
                 <motion.div 
                   initial={{ opacity: 0, y: -20 }}
@@ -338,7 +326,6 @@ const Contact = () => {
                 </motion.div>
               )}
 
-              {/* Error Message */}
               {status.error && (
                 <motion.div 
                   initial={{ opacity: 0, y: -20 }}
@@ -353,7 +340,6 @@ const Contact = () => {
                 </motion.div>
               )}
 
-              {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid md:grid-cols-2 gap-5">
                   <div>
@@ -424,11 +410,9 @@ const Contact = () => {
                     </span>
                   </div>
                   
-                  <motion.button
+                  <button
                     type="submit"
                     disabled={status.loading}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
                     className={`px-6 py-2.5 bg-gradient-to-r from-rose-600 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition-all duration-300 flex items-center space-x-2 group ${status.loading ? 'opacity-75 cursor-not-allowed' : ''}`}
                   >
                     {status.loading ? (
@@ -442,12 +426,11 @@ const Contact = () => {
                         <Send size={16} className="group-hover:translate-x-1 transition-transform" />
                       </>
                     )}
-                  </motion.button>
+                  </button>
                 </div>
               </form>
             </motion.div>
 
-            {/* Additional Info Card */}
             <motion.div 
               variants={scaleIn}
               whileHover={{ y: -2 }}
@@ -476,7 +459,6 @@ const Contact = () => {
           </motion.div>
         </div>
 
-        {/* Footer Note */}
         <motion.div 
           className="text-center mt-12"
           initial={{ opacity: 0 }}

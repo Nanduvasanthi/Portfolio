@@ -1,14 +1,13 @@
 # Nandu Vasanthi - Full Stack Developer Portfolio
 
-
-
 A modern, responsive portfolio website showcasing my skills, projects, and experience as a Full Stack Developer. Built with React, Tailwind CSS, and Framer Motion with a Node.js backend for the contact form.
 
-## Live Demo
+## 🌐 Live Demo
 
-[View Live Portfolio](#) (Add your deployed link here)
+- **Frontend**: [https://portfolio-frontend-26uz.onrender.com](https://portfolio-frontend-26uz.onrender.com)
+- **Backend API**: [https://portfolio-backend-pdrc.onrender.com](https://portfolio-backend-pdrc.onrender.com)
 
-## Features
+## ✨ Features
 
 ### Frontend
 - **Modern UI/UX** - Clean, professional design with smooth animations
@@ -32,7 +31,7 @@ A modern, responsive portfolio website showcasing my skills, projects, and exper
 - **Professional Email Templates** - HTML formatted emails
 - **Environment Variables** - Secure credential management
 
-## Tech Stack
+## 🛠️ Tech Stack
 
 ### Frontend
 - React 18 - UI library
@@ -50,7 +49,7 @@ A modern, responsive portfolio website showcasing my skills, projects, and exper
 - CORS - Cross-origin resource sharing
 - Dotenv - Environment variables
 
-## Project Structure
+## 📂 Project Structure
 
 ```
 nandu-portfolio/
@@ -79,7 +78,7 @@ nandu-portfolio/
 └── README.md               # Project documentation
 ```
 
-## Installation
+## ⚙️ Installation
 
 ### Prerequisites
 - Node.js (v14 or higher)
@@ -110,7 +109,7 @@ npm run dev
 ```
 The backend will run on http://localhost:5000
 
-## Environment Variables
+## 🔧 Environment Variables
 
 Create a `.env` file in the backend folder:
 
@@ -126,35 +125,54 @@ To get Gmail App Password:
 3. Generate a password for Mail
 4. Copy the 16-digit password
 
-## Deployment
+## 🚀 Deployment
 
-### Frontend Deployment (Vercel/Netlify)
-1. Build the project:
-   ```bash
-   cd frontend
-   npm run build
-   ```
-2. Deploy the `dist` folder to Vercel or Netlify
-
-### Backend Deployment (Render/Railway)
+### Frontend (Render)
 1. Push code to GitHub
-2. Connect your repository to Render or Railway
-3. Add environment variables
-4. Deploy
+2. Connect repository to Render
+3. Set build command: `cd frontend && npm install && npm run build`
+4. Set publish directory: `frontend/dist`
+5. Add environment variable: `VITE_API_URL` = `https://portfolio-backend-pdrc.onrender.com`
 
-## Contact
+### Backend (Render)
+1. Push code to GitHub
+2. Connect repository to Render
+3. Set root directory: `backend`
+4. Set build command: `npm install`
+5. Set start command: `node server.js`
+6. Add environment variables:
+   - `EMAIL_USER` = `nvasanthi2005@gmail.com`
+   - `EMAIL_PASS` = `jqkd tski qsfc bixw`
+   - `PORT` = `10000`
+   - `NODE_ENV` = `production`
+
+## 📬 Contact
 
 - **Email**: nvasanthi2005@gmail.com
 - **GitHub**: [Nanduvasanthi](https://github.com/Nanduvasanthi)
 - **LinkedIn**: [miriyala-nandu-vasanthi](https://linkedin.com/in/miriyala-nandu-vasanthi/)
+- **Portfolio**: [https://portfolio-frontend-26uz.onrender.com](https://portfolio-frontend-26uz.onrender.com)
 
-## License
+## 📄 License
 
 This project is for personal portfolio purposes. All rights reserved.
 
-## Acknowledgments
+## 🙏 Acknowledgments
 
 - Design inspiration from modern portfolio trends
 - Icons by Lucide React
 - Animations by Framer Motion
 - Built with React and Tailwind CSS
+- Deployed on Render
+
+## 📊 Project Status
+
+✅ **Completed** - Live and fully functional
+- Frontend deployed on Render
+- Backend API deployed on Render
+- Contact form sending emails
+- Fully responsive on all devices
+
+---
+
+**Last Updated**: February 14, 2026
