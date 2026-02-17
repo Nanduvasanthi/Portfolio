@@ -59,8 +59,7 @@ const Education = () => {
       ],
       stats: [
         { label: 'Percentage', value: '96.2%' },
-        { label: 'Rank', value: 'Top 5%' },
-        { label: 'Scholarship', value: 'Merit' }
+      
       ]
     },
     {
@@ -83,8 +82,7 @@ const Education = () => {
       ],
       stats: [
         { label: 'Percentage', value: '87%' },
-        { label: 'Achievement', value: 'Quiz Winner' },
-        { label: 'Attendance', value: '100%' }
+       
       ]
     }
   ];

@@ -162,7 +162,7 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="relative py-16 lg:py-20 overflow-hidden bg-gradient-to-b from-slate-50 to-white dark:from-dark-300 dark:to-dark-200">
+    <section id="contact" className="relative py-16 lg:py-10 overflow-hidden bg-gradient-to-b from-slate-50 to-white dark:from-dark-300 dark:to-dark-200">
       
       <div className="absolute inset-0">
         <div className="absolute top-40 -left-20 w-80 h-80 bg-rose-200/20 dark:bg-rose-900/20 rounded-full blur-3xl"></div>
