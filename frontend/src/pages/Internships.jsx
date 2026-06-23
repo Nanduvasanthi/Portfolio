@@ -19,6 +19,31 @@ const Internships = () => {
 
   const internships = [
     {
+      company: 'Labdox',
+      role: 'Web Developer Intern',
+      duration: 'Mar 9, 2026 - Jun 9, 2026',
+      location: 'Remote',
+      type: 'Internship',
+      description: 'Architected and deployed multiple production web applications and optimized frontend and backend workflows.',
+      achievements: [
+        'Architected and deployed 4 web applications using Next.js, React.js, MongoDB, and RESTful APIs to production',
+        'Engineered modular frontend components that cut overall UI development cycles by 30%',
+        'Formulated secure backend APIs and validation logic, scaling database integrations to support 500+ records',
+        'Pioneered web deployments on Vercel, optimizing asset delivery to reduce page loading times by 15%'
+      ],
+      technologies: ['Next.js', 'React', 'Node.js', 'MongoDB', 'REST APIs', 'Vercel'],
+      project: 'Multiple Production Apps',
+      logo: '💼',
+      color: 'from-pink-500 to-rose-500',
+      lightColor: 'from-pink-50 to-rose-50',
+      darkColor: 'from-pink-500/10 to-rose-500/10',
+      stats: [
+        { label: 'Duration', value: '3 Months' },
+        { label: 'Projects', value: '4' },
+        { label: 'Technologies', value: '6+' }
+      ]
+    },
+    {
       company: 'Infosys Springboard',
       role: 'Python Full-Stack Developer Intern',
       duration: 'Sep 2025 - Nov 2025',
@@ -264,21 +289,7 @@ const Internships = () => {
           ))}
         </motion.div>
 
-        {/* Simple Summary */}
-        <motion.div 
-          className="mt-8 text-center"
-          variants={fadeInUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-100 to-indigo-100 dark:from-purple-900/30 dark:to-indigo-900/30 rounded-full">
-            <GraduationCap size={18} className="mr-2 text-purple-600 dark:text-purple-400" />
-            <span className="text-sm font-medium text-purple-700 dark:text-purple-300">
-              Virtual Internship • Project-Based Learning
-            </span>
-          </div>
-        </motion.div>
+        {/* Removed simple summary per user request */}
 
         {/* Call to Action */}
         <motion.div 

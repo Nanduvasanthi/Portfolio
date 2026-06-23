@@ -106,9 +106,9 @@ const About = () => {
                 and a keen interest in building efficient, scalable web applications.
               </p>
               <p className="leading-relaxed">
-                Currently in my final year of B.Tech at <span className="font-semibold text-slate-900 dark:text-white">VVIT, Guntur</span>, 
-                I've gained practical experience through internships at <span className="font-semibold text-slate-900 dark:text-white">Infosys Springboard</span> 
-                and personal projects that solve real-world problems.
+                I recently graduated with a B.Tech in Computer Science Engineering from <span className="font-semibold text-slate-900 dark:text-white">Vasireddy Venkatadri Institute of Technology (VVIT), Guntur</span>. 
+                I've gained practical experience through internships at <span className="font-semibold text-slate-900 dark:text-white">Labdox</span> and <span className="font-semibold text-slate-900 dark:text-white">Infosys Springboard</span>, 
+                along with personal projects that solve real-world problems.
               </p>
               <div className="flex items-center space-x-2 text-sm font-medium text-primary-600 dark:text-primary-400 pt-4">
                

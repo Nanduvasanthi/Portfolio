@@ -123,7 +123,7 @@ const Home = () => {
             </h2>
 
             <p className="text-gray-600 dark:text-gray-400 max-w-xl">
-              B.Tech CSE student at VVIT, Guntur (2022–2026) with hands-on experience
+              Recently graduated with a B.Tech in Computer Science Engineering from VVIT, Guntur (2022–2026), with hands-on experience
               building full-stack applications using Python, Django, React, Node.js,
               and MongoDB.
             </p>

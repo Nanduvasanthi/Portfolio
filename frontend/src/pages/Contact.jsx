@@ -92,8 +92,8 @@ const Contact = () => {
     {
       icon: <Phone size={24} />,
       title: 'Phone',
-      value: '+91 98765 43210',
-      link: 'tel:+919876543210',
+      value: '+91 9381051147',
+      link: 'tel:+919381051147',
       color: 'from-purple-500 to-indigo-500'
     },
     {

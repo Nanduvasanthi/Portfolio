@@ -19,10 +19,10 @@ const Education = () => {
   const education = [
     {
       degree: 'B.Tech in Computer Science Engineering',
-      institution: 'VVIT, Guntur',
-      fullInstitution: 'Visoredly Venkatadri Institute of Technology, Guntur',
+      institution: 'Vasireddy Venkatadri Institute of Technology (VVIT), Guntur',
+      fullInstitution: 'Vasireddy Venkatadri Institute of Technology (VVIT), Guntur',
       duration: '2022 - 2026',
-      score: '8.44 CGPA',
+      score: '8.44/10',
       icon: <GraduationCap size={28} />,
       color: 'from-emerald-500 to-teal-500',
       lightColor: 'from-emerald-50 to-teal-50',
@@ -36,9 +36,9 @@ const Education = () => {
         'Software Engineering'
       ],
       stats: [
-        { label: 'Current Year', value: '4th Year' },
+        { label: 'Graduated', value: '2026' },
         { label: 'Projects', value: '3+' },
-        { label: 'CGPA', value: '8.44' }
+        { label: 'CGPA', value: '8.44/10' }
       ]
     },
     {
